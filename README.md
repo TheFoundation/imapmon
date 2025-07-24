@@ -58,3 +58,17 @@ Some options can be set via an environment variable (real or [dotenv](https://gi
         -p qwerty123 \
         ...
     ```
+## Deleting messages
+Please be careful with this setup ...
+to delete mails seen by the bot,
+add the following code right at the end of the mail loop ( and possibly fix indentation):
+```
+            self.mailbox.delete([msg.uid])
+        self.mailbox.expunge()
+```
+## Developer hints
+
+When using a non-docker or git version ( e.g. in venv), the required packages can be obtained with:
+```
+pip3 install sentry_sdk imap_tools telegram pyyaml click requests dotenv bs4   python-telegram-bot
+```

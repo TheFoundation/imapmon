@@ -1,7 +1,11 @@
 from click import BadOptionUsage
 from bs4 import BeautifulSoup
 from imap_tools import MailMessage
-from telegram import Bot, ParseMode
+#from telegram import Bot, ParseMode
+#as per Version 20 you need to use: (https://stackoverflow.com/a/74180161)
+from telegram import Bot
+from telegram.constants import ParseMode
+import asyncio
 
 from imapmon.settings import Settings
 from imapmon.channels.base import BaseChannel
@@ -47,9 +51,9 @@ class TelegramChannel(BaseChannel):
             f'```\n{self.clean_string(message_body)}\n```'
         )
 
-        self.bot.send_message(
+        asyncio.run(self.bot.send_message(
             chat_id=self.settings.telegram_chat_id,
             text=telegram_msg,
             parse_mode=ParseMode.MARKDOWN_V2,
             disable_web_page_preview=True
-        )
+        ))
